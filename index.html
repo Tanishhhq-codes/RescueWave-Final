@@ -87,7 +87,20 @@
     <script src="script.js"></script>
     
     <script>
-        // Initialize Firebase auth
+        // Initialize Firebase with your config
+        const firebaseConfig = {
+            // Your Firebase configuration object should be here
+            // Copy this from your Firebase Console
+            apiKey: "your-api-key",
+            authDomain: "your-project-id.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project-id.appspot.com",
+            messagingSenderId: "your-messaging-sender-id",
+            appId: "your-app-id"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
         // Handle form submission
@@ -96,15 +109,22 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
+            // Show loading spinner
+            document.getElementById('loading-spinner').style.display = 'block';
+
             // Use Firebase authentication
             auth.signInWithEmailAndPassword(username, password)
                 .then((userCredential) => {
+                    // Hide loading spinner
+                    document.getElementById('loading-spinner').style.display = 'none';
                     // Signed in successfully
                     alert("Login successful!");
                     // Redirect to the Ask AI page
                     window.location.href = "https://homepage-two-rust.vercel.app/#ask-ai";
                 })
                 .catch((error) => {
+                    // Hide loading spinner
+                    document.getElementById('loading-spinner').style.display = 'none';
                     // Handle errors here
                     alert("Login failed: " + error.message);
                 });
